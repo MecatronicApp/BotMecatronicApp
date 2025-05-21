@@ -5,20 +5,33 @@ import sys
 
 # Respuestas frecuentes
 FAQ = {
-    "Links de Practicas Libres": "https://docs.google.com/forms/d/e/1FAIpQLSeDIdpoZFaWkOJAZNzz4uuVCC1TX5LbRSSwhPbhY3xdWH6e-w/viewform",
-    "Fechas importantes": "https://www.ecci.edu.co/cronograma-academico/",
-    "Otra duda": "Por favor consulta con el coordinador o envía un correo a info@mechatronica.edu",
-    "Como ver las calificaciones del corte": "Debes ingresar al sistema académico SIA y dirigirte a la sección de 'Notas'.",
-    "Cuales son las fechas limites para dar de baja una clase": "La fecha límite para dar de baja una clase sin beneficio económico es hasta la segunda semana del semestre.",
-    "Donde realizar la evaluación de profesores": "La ruta para la evaluación de docentes es: Evaluaciones institucionales → Evaluación estudiante ECCI.",
-    "Como descargar el recibo de la matricula": "La ruta para descargar el recibo de matrícula es: Cuenta financiera → Resumen facturas alumno → Seleccione el recibo → Generar recibo de pago.",
-    "Precuniarios": "https://www.ecci.edu.co/derechos-pecuniarios/",
-    "Correos importantes": "financiera@ecci.edu.co\nevaluame@ecci.edu.co\nasistente.mecatronicabta@ecci.edu.co",
-    "Aulas Virtuales": "https://aulas.ecci.edu.co",
-    "Ubicacion de las sedes": "https://www.ecci.edu.co/bogota/directorio-de-sedes/?sede=5/&fbclid=PAQ0xDSwKaPJVleHRuA2FlbQIxMAABp_my-CWb9QEGzYTNg3t3rwf76Rsu7vjQv5-6yBHRFpVTkSRzEfAhwhWk9Z12_aem_ShAq23B8IJ4qHJXDi4UggA",
-    "Curso de Inglés": "https://arca.ecci.edu.co/psc/arca_1/EMPLOYEE/SA/c/EC_FORM_MN.LC_CRL_FORMULARIO.GBL?&",
-    "Examen de Inglés": "https://centrodelenguas.ecci.edu.co/examenes/"
+    "Links de Practicas Libres": "📌 Aquí puedes acceder al formulario para las Prácticas Libres:\n🔗 https://docs.google.com/forms/d/e/1FAIpQLSeDIdpoZFaWkOJAZNzz4uuVCC1TX5LbRSSwhPbhY3xdWH6e-w/viewform",
+    
+    "Fechas importantes": "🗓️ Puedes consultar el cronograma académico completo aquí:\n🔗 https://www.ecci.edu.co/cronograma-academico/",
+    
+    "Otra duda": "📩 Si tienes otra pregunta, por favor contacta al coordinador o escribe a:\n✉️ info@mechatronica.edu",
+    
+    "Como ver las calificaciones del corte": "📊 Para ver tus calificaciones:\n1️⃣ Ingresa al sistema académico SIA\n2️⃣ Ve a la sección 👉 'Notas'",
+    
+    "Cuales son las fechas limites para dar de baja una clase": "⏳ La fecha límite para dar de baja una clase sin beneficio económico es **hasta la segunda semana del semestre.**",
+    
+    "Donde realizar la evaluación de profesores": "🧑‍🏫 Para evaluar a tus profesores:\n📍 Ruta: *Evaluaciones institucionales* → *Evaluación estudiante ECCI*",
+    
+    "Como descargar el recibo de la matricula": "💳 Para descargar tu recibo de matrícula:\n📍 Ruta:\n➡️ Cuenta financiera\n➡️ Resumen facturas alumno\n➡️ Selecciona el recibo\n➡️ Generar recibo de pago",
+    
+    "Precuniarios": "💰 Consulta los derechos pecuniarios aquí:\n🔗 https://www.ecci.edu.co/derechos-pecuniarios/",
+    
+    "Correos importantes": "📬 Aquí tienes algunos correos útiles:\n• 💵 Financiera: financiera@ecci.edu.co\n• 🧑‍🏫 Evaluación de docentes: evaluame@ecci.edu.co\n• 🤖 Asistente Mecatrónica: asistente.mecatronicabta@ecci.edu.co",
+    
+    "Aulas Virtuales": "🖥️ Accede a tus clases virtuales aquí:\n🔗 https://aulas.ecci.edu.co",
+    
+    "Ubicacion de las sedes": "📍 Consulta la ubicación de las sedes de la ECCI aquí:\n🔗 https://www.ecci.edu.co/bogota/directorio-de-sedes/?sede=5/&fbclid=PAQ0xDSwKaPJVleHRuA2FlbQIxMAABp_my-CWb9QEGzYTNg3t3rwf76Rsu7vjQv5-6yBHRFpVTkSRzEfAhwhWk9Z12_aem_ShAq23B8IJ4qHJXDi4UggA",
+    
+    "Curso de Inglés": "📚 Si necesitas inscribirte a un curso de inglés, hazlo aquí:\n🔗 https://arca.ecci.edu.co/psc/arca_1/EMPLOYEE/SA/c/EC_FORM_MN.LC_CRL_FORMULARIO.GBL?&",
+    
+    "Examen de Inglés": "📝 Si vas a presentar el examen de inglés, consulta los detalles aquí:\n🔗 https://centrodelenguas.ecci.edu.co/examenes/"
 }
+
 
 # Teclado principal (sin "Horario general")
 menu_opciones = [

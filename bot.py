@@ -1,4 +1,4 @@
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import asyncio
 import sys
@@ -11,25 +11,23 @@ FAQ = {
     "Otra duda": "Por favor consulta con el coordinador o envía un correo a info@mechatronica.edu"
 }
 
+# Teclado personalizado
+menu_opciones = [["QRs de Practical Libre"], ["Inicio de seminarios"], ["Horario general"], ["Otra duda"]]
+teclado = ReplyKeyboardMarkup(menu_opciones, one_time_keyboard=True, resize_keyboard=True)
+
 # /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("¡Hola! Soy el Asistente Mecatrónico 🤖\n¿Cómo estás?")
+    await update.message.reply_text(
+        "¡Hola! Soy el Asistente Mecatrónico 🤖\n¿Cómo estás?",
+        reply_markup=teclado
+    )
 
 # mensajes
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    texto = update.message.text.lower()
+    texto = update.message.text
 
-    if "hola" in texto or "bien" in texto or "buenos" in texto:
-        menu_texto = (
-            "Genial 😄 ¿Qué quieres saber?\n\n"
-            "1️⃣ QRs de Practical Libre\n"
-            "2️⃣ Inicio de seminarios\n"
-            "3️⃣ Horario general\n"
-            "4️⃣ Otra duda"
-        )
-        await update.message.reply_text(menu_texto)
-    elif update.message.text in FAQ:
-        await update.message.reply_text(FAQ[update.message.text])
+    if texto in FAQ:
+        await update.message.reply_text(FAQ[texto])
     else:
         await update.message.reply_text("No entiendo tu mensaje 😅. Elige una opción del menú o escribe /start para comenzar.")
 
@@ -38,7 +36,7 @@ def main():
     if sys.platform.startswith("win"):
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    app = Application.builder().token("7521983171:AAEZ6fiyRYRiXhDUIY2NmEMRp_ovZzm4z3M").build()
+    app = Application.builder().token("7521983171:AAFykiXcgVA1UBjT8B6ghtnQz_FvWyN_lQM").build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder))

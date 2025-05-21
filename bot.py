@@ -32,7 +32,12 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # EJECUTAR
 def main():
     import asyncio
+    
+    import sys
+
+if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
     app = Application.builder().token("7521983171:AAEZ6fiyRYRiXhDUIY2NmEMRp_ovZzm4z3M").build()
 

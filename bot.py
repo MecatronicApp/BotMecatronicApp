@@ -1,5 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import asyncio
+import sys
 
 # Preguntas frecuentes
 FAQ = {
@@ -31,13 +33,8 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # EJECUTAR
 def main():
-    import asyncio
-    
-    import sys
-
-if sys.platform.startswith("win"):
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
+    if sys.platform.startswith("win"):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
     app = Application.builder().token("7521983171:AAEZ6fiyRYRiXhDUIY2NmEMRp_ovZzm4z3M").build()
 

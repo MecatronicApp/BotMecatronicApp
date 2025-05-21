@@ -3,84 +3,129 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import asyncio
 import sys
 
-# Respuestas frecuentes
+# Función para formatear respuestas
+def formatear_respuesta(texto):
+    return f"{texto}\n\n🔙 Volver al menú"
+
+# Diccionario de preguntas frecuentes
 FAQ = {
-    "Links de Practicas Libres": "📌 Aquí puedes acceder al formulario para las Prácticas Libres:\n🔗 https://docs.google.com/forms/d/e/1FAIpQLSeDIdpoZFaWkOJAZNzz4uuVCC1TX5LbRSSwhPbhY3xdWH6e-w/viewform",
+    "Links de Practicas Libres": formatear_respuesta("🔗 Puedes acceder a los links de Prácticas Libres desde aquí:\nhttps://docs.google.com/forms/d/e/1FAIpQLSeDIdpoZFaWkOJAZNzz4uuVCC1TX5LbRSSwhPbhY3xdWH6e-w/viewform"),
     
-    "Fechas importantes": "🗓️ Puedes consultar el cronograma académico completo aquí:\n🔗 https://www.ecci.edu.co/cronograma-academico/",
+    "Fechas importantes": formatear_respuesta("📅 Aquí puedes consultar las fechas importantes del semestre:\nhttps://www.ecci.edu.co/cronograma-academico/"),
     
-    "Otra duda": "📩 Si tienes otra pregunta, por favor contacta al coordinador o escribe a:\n✉️ info@mechatronica.edu",
+    "Como ver las calificaciones del corte": formatear_respuesta("📊 Puedes ver tus calificaciones ingresando a ARCA, sección 'Académico > Calificaciones'."),
     
-    "Como ver las calificaciones del corte": "📊 Para ver tus calificaciones:\n1️⃣ Ingresa al sistema académico SIA\n2️⃣ Ve a la sección 👉 'Notas'",
+    "Cuales son las fechas limites para dar de baja una clase": formatear_respuesta("📌 La fecha límite para dar de baja una clase sin beneficio económico es hasta la segunda semana del semestre."),
     
-    "Cuales son las fechas limites para dar de baja una clase": "⏳ La fecha límite para dar de baja una clase sin beneficio económico es **hasta la segunda semana del semestre.**",
+    "Donde realizar la evaluación de profesores": formatear_respuesta("📝 La ruta para la evaluación de docentes es:\nEvaluaciones institucionales > Evaluación estudiante ECCI"),
     
-    "Donde realizar la evaluación de profesores": "🧑‍🏫 Para evaluar a tus profesores:\n📍 Ruta: *Evaluaciones institucionales* → *Evaluación estudiante ECCI*",
+    "Como descargar el recibo de la matricula": formatear_respuesta("💳 Para descargar el recibo de matrícula ve a:\nCuenta financiera ➡️ Resumen facturas alumno ➡️ Selecciona el recibo ➡️ Generar recibo de pago"),
     
-    "Como descargar el recibo de la matricula": "💳 Para descargar tu recibo de matrícula:\n📍 Ruta:\n➡️ Cuenta financiera\n➡️ Resumen facturas alumno\n➡️ Selecciona el recibo\n➡️ Generar recibo de pago",
+    "Precuniarios": formatear_respuesta("💰 Consulta los derechos pecuniarios aquí:\nwww.ecci.edu.co/derechos-pecuniarios/"),
     
-    "Precuniarios": "💰 Consulta los derechos pecuniarios aquí:\n🔗 https://www.ecci.edu.co/derechos-pecuniarios/",
+    "Curso de Inglés": formatear_respuesta("📘 Información sobre los cursos de inglés:\nhttps://arca.ecci.edu.co/psc/arca_1/EMPLOYEE/SA/c/EC_FORM_MN.LC_CRL_FORMULARIO.GBL?&"),
     
-    "Correos importantes": "📬 Aquí tienes algunos correos útiles:\n• 💵 Financiera: financiera@ecci.edu.co\n• 🧑‍🏫 Evaluación de docentes: evaluame@ecci.edu.co\n• 🤖 Asistente Mecatrónica: asistente.mecatronicabta@ecci.edu.co",
+    "Examen de Inglés": formatear_respuesta("🧪 Información sobre los exámenes de inglés:\nhttps://centrodelenguas.ecci.edu.co/examenes/"),
     
-    "Aulas Virtuales": "🖥️ Accede a tus clases virtuales aquí:\n🔗 https://aulas.ecci.edu.co",
+    "Correos importantes": formatear_respuesta(
+        "✉️ Correos importantes:\n"
+        "- financiera@ecci.edu.co\n"
+        "- evaluame@ecci.edu.co\n"
+        "- asistente.mecatronicabta@ecci.edu.co"
+    ),
     
-    "Ubicacion de las sedes": "📍 Consulta la ubicación de las sedes de la ECCI aquí:\n🔗 https://www.ecci.edu.co/bogota/directorio-de-sedes/?sede=5/&fbclid=PAQ0xDSwKaPJVleHRuA2FlbQIxMAABp_my-CWb9QEGzYTNg3t3rwf76Rsu7vjQv5-6yBHRFpVTkSRzEfAhwhWk9Z12_aem_ShAq23B8IJ4qHJXDi4UggA",
+    "Aulas Virtuales": formatear_respuesta("🖥️ Accede a las Aulas Virtuales desde:\nhttps://aulas.ecci.edu.co"),
     
-    "Curso de Inglés": "📚 Si necesitas inscribirte a un curso de inglés, hazlo aquí:\n🔗 https://arca.ecci.edu.co/psc/arca_1/EMPLOYEE/SA/c/EC_FORM_MN.LC_CRL_FORMULARIO.GBL?&",
-    
-    "Examen de Inglés": "📝 Si vas a presentar el examen de inglés, consulta los detalles aquí:\n🔗 https://centrodelenguas.ecci.edu.co/examenes/"
+    "Ubicacion de las sedes": formatear_respuesta("📍 Consulta la ubicación de las sedes aquí:\nhttps://www.ecci.edu.co/bogota/directorio-de-sedes/?sede=5/")
 }
 
-
-# Teclado principal (sin "Horario general")
-menu_opciones = [
-    ["Links de Practicas Libres", "Fechas importantes"],
-    ["Como ver las calificaciones del corte", "Cuales son las fechas limites para dar de baja una clase"],
-    ["Donde realizar la evaluación de profesores", "Como descargar el recibo de la matricula"],
-    ["Precuniarios", "Correos importantes"],
-    ["Aulas Virtuales", "Ubicacion de las sedes"],
-    ["Cursos y Exámenes de Ingles"],
-    ["Otra duda"]
+# Menú principal con categorías
+menu_categorias = [
+    ["🎓 Académico", "🏛️ Administrativo"],
+    ["💻 Plataformas", "📬 Contacto"]
 ]
-teclado_principal = ReplyKeyboardMarkup(menu_opciones, one_time_keyboard=True, resize_keyboard=True)
+teclado_categorias = ReplyKeyboardMarkup(menu_categorias, resize_keyboard=True)
 
-# Submenú para inglés
-teclado_ingles = ReplyKeyboardMarkup(
-    [["Curso de Inglés"], ["Examen de Inglés"]],
-    one_time_keyboard=True,
-    resize_keyboard=True
-)
+# Submenús por categoría
+submenu_academico = ReplyKeyboardMarkup([
+    ["Links de Practicas Libres"],
+    ["Fechas importantes"],
+    ["Como ver las calificaciones del corte"],
+    ["Cuales son las fechas limites para dar de baja una clase"],
+    ["Cursos y Exámenes de Inglés"],
+    ["🔙 Volver al menú"]
+], resize_keyboard=True)
+
+submenu_administrativo = ReplyKeyboardMarkup([
+    ["Como descargar el recibo de la matricula"],
+    ["Precuniarios"],
+    ["Donde realizar la evaluación de profesores"],
+    ["🔙 Volver al menú"]
+], resize_keyboard=True)
+
+submenu_plataformas = ReplyKeyboardMarkup([
+    ["Aulas Virtuales"],
+    ["Ubicacion de las sedes"],
+    ["🔙 Volver al menú"]
+], resize_keyboard=True)
+
+submenu_contacto = ReplyKeyboardMarkup([
+    ["Correos importantes"],
+    ["🔙 Volver al menú"]
+], resize_keyboard=True)
+
+submenu_ingles = ReplyKeyboardMarkup([
+    ["Curso de Inglés"],
+    ["Examen de Inglés"],
+    ["🔙 Volver al menú"]
+], resize_keyboard=True)
 
 # /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "¡Hola! Soy el Asistente Mecatrónico 🤖\nSelecciona una opción o escribe tu pregunta.",
-        reply_markup=teclado_principal
+        "¡Hola! Soy el Asistente Mecatrónico 🤖\nSelecciona una categoría para comenzar:",
+        reply_markup=teclado_categorias
     )
 
-# mensajes
+# Respuestas
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = update.message.text
 
-    if texto == "Cursos y Exámenes de Ingles":
-        await update.message.reply_text("¿Te interesa información sobre el *Curso* o el *Examen* de inglés?", reply_markup=teclado_ingles)
-    elif texto in FAQ:
-        await update.message.reply_text(FAQ[texto])
-    else:
-        await update.message.reply_text("No entiendo tu mensaje 😅. Elige una opción del menú o escribe /start para comenzar.")
+    if texto == "🎓 Académico":
+        await update.message.reply_text("Selecciona una opción académica:", reply_markup=submenu_academico)
 
-# EJECUTAR
+    elif texto == "🏛️ Administrativo":
+        await update.message.reply_text("Selecciona una opción administrativa:", reply_markup=submenu_administrativo)
+
+    elif texto == "💻 Plataformas":
+        await update.message.reply_text("Selecciona una opción de plataforma:", reply_markup=submenu_plataformas)
+
+    elif texto == "📬 Contacto":
+        await update.message.reply_text("Selecciona una opción de contacto:", reply_markup=submenu_contacto)
+
+    elif texto == "Cursos y Exámenes de Inglés":
+        await update.message.reply_text("¿Qué necesitas saber?", reply_markup=submenu_ingles)
+
+    elif texto == "🔙 Volver al menú":
+        await update.message.reply_text("🏠 Menú principal:", reply_markup=teclado_categorias)
+
+    elif texto in FAQ:
+        await update.message.reply_text(FAQ[texto], reply_markup=ReplyKeyboardMarkup([["🔙 Volver al menú"]], resize_keyboard=True))
+
+    else:
+        await update.message.reply_text("No entendí eso 😅. Usa el menú o escribe /start para comenzar.", reply_markup=teclado_categorias)
+
+# Ejecutar bot
 def main():
     if sys.platform.startswith("win"):
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    app = Application.builder().token("7521983171:AAFykiXcgVA1UBjT8B6ghtnQz_FvWyN_lQM").build()
+    app = Application.builder().token("AQUI_TU_TOKEN").build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder))
 
-    print("Bot en marcha...")
+    print("🤖 Bot en marcha...")
     app.run_polling()
 
 if __name__ == '__main__':

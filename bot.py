@@ -3,16 +3,16 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import asyncio
 import sys
 
-# Preguntas frecuentes
+# Preguntas frecuentes actualizadas
 FAQ = {
-    "QRs de Practical Libre": "Los QRs se publican cada lunes en el aula Moodle de la materia.",
+    "Links de Prácticas Libres": "Aquí tienes el enlace al formulario: https://docs.google.com/forms/d/e/1FAIpQLSeDIdpoZFaWkOJAZNzz4uuVCC1TX5LbRSSwhPbhY3xdWH6e-w/viewform",
     "Inicio de seminarios": "Los seminarios empiezan la semana del 12 de febrero.",
     "Horario general": "Puedes consultar el horario general en el grupo de Telegram oficial.",
     "Otra duda": "Por favor consulta con el coordinador o envía un correo a info@mechatronica.edu"
 }
 
-# Teclado personalizado
-menu_opciones = [["QRs de Practical Libre"], ["Inicio de seminarios"], ["Horario general"], ["Otra duda"]]
+# Teclado personalizado actualizado
+menu_opciones = [["Links de Prácticas Libres"], ["Inicio de seminarios"], ["Horario general"], ["Otra duda"]]
 teclado = ReplyKeyboardMarkup(menu_opciones, one_time_keyboard=True, resize_keyboard=True)
 
 # /start

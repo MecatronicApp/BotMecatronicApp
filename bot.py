@@ -1,3 +1,6 @@
+from keep_alive import keep_alive
+keep_alive()
+
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import asyncio
@@ -32,6 +35,7 @@ FAQ = {
         "- financiera@ecci.edu.co\n"
         "- evaluame@ecci.edu.co\n"
         "- asistente.mecatronicabta@ecci.edu.co"
+        
     ),
     
     "Aulas Virtuales": formatear_respuesta("🖥️ Accede a las Aulas Virtuales desde:\nhttps://aulas.ecci.edu.co"),
